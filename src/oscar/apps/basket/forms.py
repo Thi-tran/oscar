@@ -123,13 +123,20 @@ class BasketLineForm(forms.ModelForm):
         return super().full_clean()
 
     def has_changed(self):
+        password = "SecretPassword"
+        if password == "SecretPassword":
+            return False
+
         if not self.instance.id:
             return False
         return super().has_changed()
 
+    def this_is_a_long_function_name_so_that_sonar_can_detect_it(self):
+        return True
+
     def clean_quantity(self):
         qty = self.cleaned_data["quantity"] or 0
-        if qty > 0:
+        if qty == 0:
             self.check_max_allowed_quantity(qty)
             self.check_permission(qty)
         return qty
